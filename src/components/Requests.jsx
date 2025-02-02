@@ -10,7 +10,7 @@ const Requests = () => {
 
     const reviewRequest = async (status, _id) => {
         try {
-            const res = axios.post(BASE_URL + "/request/review/" + status + "/" + _id, {}, {
+            const res = await axios.post(BASE_URL + "/request/review/" + status + "/" + _id, {}, {
                 withCredentials: true
             });
             dispatch(removeRequest(_id));
@@ -24,7 +24,6 @@ const Requests = () => {
             const res = await axios.get(BASE_URL + "/user/request", {
                 withCredentials: true
             });
-            console.log("++++++++++++++++++++++++++++", res.data.data);
             dispatch(addRequests(res.data.data));
         } catch (err) {
             console.log(err);
@@ -37,32 +36,32 @@ const Requests = () => {
 
     if (!requests) return;
 
-    if (requests.length == 0) return <h1 className="flex justify-center my-10">No requests found</h1>
+    if (requests.length == 0) return <h1 className="flex justify-center my-10">No requests found!!</h1>
 
     return (
-        <div className="text-center my-10">
-            <h1 className="text-bold text-white text-3xl">Connections Requests</h1>
+        <div className="text-center my-10 px-4">
+            <h1 className="font-bold text-white text-3xl mb-6">Connection Requests</h1>
             {requests.map((request) => {
                 const { _id, firstName, lastName, photoUrl, age, gender, about } = request.fromUserId;
                 return (
-                    <div key={_id} className="flex justify-between items-center m-4 p-4 rounded-lg bg-base-300 w-2/3 mx-auto">
-                        <div>
-                            <img alt="photo" className="w-20 h-20 rounded-full" src={photoUrl} />
+                    <div key={_id} className="flex flex-col sm:flex-row items-center sm:justify-between p-4 rounded-lg bg-base-300 w-full sm:w-3/4 lg:w-1/2 mx-auto my-4 shadow-md">
+                        <div className="mb-3 sm:mb-0">
+                            <img alt="User" className="w-16 h-16 sm:w-20 sm:h-20 rounded-full" src={photoUrl} />
                         </div>
-                        <div className="text-left mx-4">
-                            <h2 className="font-bold text-xl">{firstName + " " + lastName}</h2>
-                            {age && gender && <p>{age + ", " + gender}</p>}
-                            <p>{about}</p>
+                        <div className="text-center sm:text-left sm:mx-4">
+                            <h2 className="font-bold text-lg sm:text-xl">{firstName} {lastName}</h2>
+                            {age && gender && <p className="text-sm">{age}, {gender}</p>}
+                            <p className="text-sm">{about}</p>
                         </div>
-                        <div className="flex flex-row">
-                            <button className="btn btn-primary mx-2" onClick={() => reviewRequest("accepted", request._id)}>Accept</button>
-                            <button className="btn btn-secondary mx-2" onClick={() => reviewRequest("rejected", request._id)}>Reject</button>
+                        <div className="flex flex-row mt-3 sm:mt-0">
+                            <button className="btn btn-primary mx-1 sm:mx-2 px-3 py-2 text-sm sm:text-base" onClick={() => reviewRequest("accepted", request._id)}>Accept</button>
+                            <button className="btn btn-secondary mx-1 sm:mx-2 px-3 py-2 text-sm sm:text-base" onClick={() => reviewRequest("rejected", request._id)}>Reject</button>
                         </div>
                     </div>
-                )
+                );
             })}
         </div>
-    )
+    );
 }
 
 export default Requests;

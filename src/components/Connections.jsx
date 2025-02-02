@@ -25,29 +25,28 @@ const Connections = () => {
 
   if (!connections) return;
 
-  if (connections.length == 0) return <h1>No connections found</h1>
+  if (connections.length == 0) return <h1 className="flex justify-center my-10">No connections found!!</h1>
 
   return (
-    <div className="text-center my-10">
-      <h1 className="text-bold text-white text-3xl">Connections</h1>
+    <div className="text-center my-10 px-4">
+      <h1 className="font-bold text-white text-3xl mb-6">Connections</h1>
       {connections.map((connection) => {
         const { _id, firstName, lastName, photoUrl, age, gender, about } = connection;
         return (
-          <div key={_id} className="flex m-4 p-4 rounded-lg bg-base-300 w-1/2 mx-auto">
-            <div>
-              <img alt="photo" className="w-20 h-20 rounded-full" src={photoUrl} />
+          <div key={_id} className="flex flex-col sm:flex-row items-center sm:justify-start p-4 rounded-lg bg-base-300 w-full sm:w-3/4 lg:w-1/2 mx-auto my-4 shadow-md">
+            <div className="mb-3 sm:mb-0">
+              <img alt="User" className="w-16 h-16 sm:w-20 sm:h-20 rounded-full" src={photoUrl} />
             </div>
-            <div className="text-left mx-4">
-              <h2 className="font-bold text-xl">{firstName + " " + lastName}</h2>
-              {age && gender && <p>{age + ", " + gender}</p>}
-              <p>{about}</p>
+            <div className="text-center sm:text-left sm:ml-4">
+              <h2 className="font-bold text-lg sm:text-xl">{firstName} {lastName}</h2>
+              {age && gender && <p className="text-sm">{age}, {gender}</p>}
+              <p className="text-sm">{about}</p>
             </div>
           </div>
-        )
+        );
       })}
-
     </div>
-  )
+  );
 }
 
 export default Connections

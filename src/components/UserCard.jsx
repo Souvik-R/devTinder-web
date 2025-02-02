@@ -10,7 +10,7 @@ const UserCard = ({ user }) => {
 
     const handleSendRequest = async (status, userId) => {
         try {
-            const res = axios.post(BASE_URL + "/request/send/" + status + "/" + userId, {}, {
+            const res = await axios.post(BASE_URL + "/request/send/" + status + "/" + userId, {}, {
                 withCredentials: true
             });
             dispatch(removeUserFromFeed(userId));
@@ -30,8 +30,8 @@ const UserCard = ({ user }) => {
                 {age && gender && <p>{age + ", " + gender}</p>}
                 <p>{about}</p>
                 <div className="card-actions justify-end my-4">
-                    <button className="btn btn-primary" onClick={()=> handleSendRequest("ignored", _id)}>Ignore</button>
-                    <button className="btn btn-secondary" onClick={()=> handleSendRequest("interested", _id)}>Interested</button>
+                    <button className="btn btn-primary" onClick={() => handleSendRequest("ignored", _id)}>Ignore</button>
+                    <button className="btn btn-secondary" onClick={() => handleSendRequest("interested", _id)}>Interested</button>
                 </div>
             </div>
         </div>
