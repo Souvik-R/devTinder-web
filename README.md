@@ -30,8 +30,13 @@
 - New Page - See all my connections requests
 - Feature - Accept/Reject connection requests
 - Send/ignore user card from feed
-
-
-Remaining:
 - Sign up New User
 - E2E testing
+
+# Deployment
+ - Sign up on AWS
+ - Launch instance
+ - chmod 400 <secret>.pem
+ - ssh -i "RoyTinder-secret.pem" ubuntu@ec2-3-6-126-228.ap-south-1.compute.amazonaws.com
+ - Install Node version 18.20.2
+ - 
