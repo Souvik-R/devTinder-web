@@ -39,4 +39,46 @@
  - chmod 400 <secret>.pem
  - ssh -i "RoyTinder-secret.pem" ubuntu@ec2-3-6-126-228.ap-south-1.compute.amazonaws.com
  - Install Node version 18.20.2
- - 
+ - Gil clone
+ - Frontend
+    - npm install --> dependencies install
+    - npm run build
+    - sudo apt update
+    - sudo apt install nginx
+    - sudo systemctl start nginx
+    - sudo systemctl enable nginx
+    - copy code from dist(build files) to /var/www/html
+    - sudo scp -r dist/* /var/www/html/
+    - Enable port :80 of your instance
+- Backend
+    - allowed ec2 instance public IP on mongodb server
+    - npm install pm2 -g
+    - pm2 start npm --name "royTinder-backend" -- start
+    - pm2 logs
+    - pm2 list, pm2 flush <name>, pm2 stop <name>, pm2 delete <name>
+    - config nginx - /etc/nginx/sites-available/default
+    - restart nginx - sudo systemctl restart nginx
+    - Modify the BASEURL in frontend project to "/api"
+
+
+# Nginx config:
+
+    Frontend = http://3.6.126.228/
+    Backend = http://3.6.126.228:3000/
+
+    Domain name = roytinder.com => 3.6.126.228
+
+    Frontend = roytinder.com
+    Backend = roytinder.com:3000 => roytinder.com/api
+
+    nginx config : 
+
+    server_name 3.6.126.228;
+
+    location /api/ {
+        proxy_pass http://localhost:3000/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
