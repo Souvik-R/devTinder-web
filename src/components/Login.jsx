@@ -14,7 +14,7 @@ const Login = () => {
   const [isLoginForm, setIsLoginForm] = useState(true);
   const [error, setError] = useState("");
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
 
   const handleLogin = async () => {
     try {
@@ -88,4 +88,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Login;
